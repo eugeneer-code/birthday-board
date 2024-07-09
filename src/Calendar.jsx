@@ -13,7 +13,19 @@ function generateValues(year)
     var list = [];
     for(var i=0; i<persons.length; i++){
         var [DD, MM, YYYY] = persons.at(i).bd.split('.');
-        list.push({ date: year+'-'+MM+'-'+DD, count: 1, tooltip: "!!!" });
+        var dateStr = year+'-'+MM+'-'+DD;
+        var index = list.findIndex(x => x.date ===dateStr);
+        if(index == -1){
+          list.push({ date: dateStr, count: 0, tooltip: ""});
+          index = list.length - 1;
+        }
+        var descr = DD + "." + MM + " " + persons.at(i).name;
+        if((year - YYYY) % 10 == 0) descr = descr + "✭" + (year - YYYY) + "✭"
+        else if((year - YYYY) % 5 == 0) descr = descr + "☆" + (year - YYYY) + "☆"
+
+        list.at(index).count = list.at(index).count + 1;
+        if(list.at(index).count > 1) list.at(index).tooltip = list.at(index).tooltip + '\n'; 
+        list.at(index).tooltip = list.at(index).tooltip + descr;
     }
     return list
 }
@@ -73,7 +85,7 @@ function Calendar(props) {
           placement="top"
         >
           <Paper>
-              <Typography sx={{ p: 2 }}>{tooltipText}</Typography>
+              <Typography style={{whiteSpace: 'pre-line'}} sx={{ p: 2 }}>{tooltipText}</Typography>
             </Paper>
         </Popper>
       </Card>
