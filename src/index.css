@@ -1,0 +1,26 @@
+html, body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  min-width: 100%;
+  height: 100%;
+  gap: 2rem;
+  background-color: rgb(245, 245, 245);
+}
+
+base {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
+.react-calendar-heatmap .color-scale-2 { fill: #8cc665; }
+.react-calendar-heatmap .color-scale-3 { fill: #44a340; }
+.react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
