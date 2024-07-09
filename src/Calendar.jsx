@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
+import { Paper, Popper } from '@mui/material';
 
 function generateValues(year)
 {
@@ -20,12 +21,25 @@ function generateValues(year)
 function Calendar(props) {
     const [cacheYear, setCacheYear] = useState(0);
     const [itemValues, setItemValues] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [tooltipText, setTooltipText] = useState("");
+    const open = Boolean(anchorEl);
+
     useEffect(() => {
     if (props.year !== cacheYear) {
         setCacheYear(props.year);
         setItemValues(generateValues(props.year));
     }
     }, [props.year]);
+
+    
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
   return (
       <Card  sx={{ width: 800}}>
@@ -37,7 +51,13 @@ function Calendar(props) {
             startDate={new Date(props.year-1, 11, 31)}
             endDate={new Date(props.year, 11, 31)}
             values={itemValues}
-            tooltipDataAttrs={(value) => { return { 'data-tip': 'Tooltip: '} }}
+            onMouseOver={(event, value) => {
+              if(value) {
+                setTooltipText(value.tooltip);
+                handleClick(event);
+              }
+              }}
+            onMouseLeave={(event, value) => {handleClose();}}
             classForValue={(value) => {
                 if (!value) {
                   return 'color-empty';
@@ -46,6 +66,16 @@ function Calendar(props) {
               }}
           />
         </CardContent>
+        <Popper
+         open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          placement="top"
+        >
+          <Paper>
+              <Typography sx={{ p: 2 }}>{tooltipText}</Typography>
+            </Paper>
+        </Popper>
       </Card>
   )
 }
