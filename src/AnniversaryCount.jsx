@@ -5,14 +5,14 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
-function Count() {
+function AnniversaryCount() {
 
   return (
     <div className="base" sx={{backgroundColor:"grey"}}>
       <Card sx={{ width: 240}}>
         <CardContent>
         <Typography variant={'h6'} color="text.secondary" gutterBottom>
-           Всего записей
+           Юбилеи следующие 30 дней
         </Typography>
         <Typography variant={'h3'} color="text.secondary" gutterBottom>
            {persons.length}
@@ -23,4 +23,4 @@ function Count() {
   )
 }
 
-export default Count
+export default AnniversaryCount

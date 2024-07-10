@@ -51,7 +51,7 @@ function MonthView(props) {
         }, [props.month]);
 
     return (
-      <Card sx={{ width: 500}}>
+      <Card sx={{ width: 535}}>
         <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
             <IconButton onClick={props.prevMonth}><ArrowBackIosIcon /></IconButton>
             <Typography variant={'h6'} color="text.secondary" gutterBottom>{monthList[props.month-1]} {props.year}</Typography>
