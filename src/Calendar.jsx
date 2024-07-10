@@ -16,16 +16,17 @@ function generateValues(year)
         var dateStr = year+'-'+MM+'-'+DD;
         var index = list.findIndex(x => x.date ===dateStr);
         if(index == -1){
-          list.push({ date: dateStr, count: 0, tooltip: ""});
+          list.push({ date: dateStr, count: 0, tooltip: "", anniversary: false});
           index = list.length - 1;
         }
         var descr = DD + "." + MM + " " + persons.at(i).name;
-        if((year - YYYY) % 10 == 0) descr = descr + "✭" + (year - YYYY) + "✭"
-        else if((year - YYYY) % 5 == 0) descr = descr + "☆" + (year - YYYY) + "☆"
+        if((year - YYYY) % 10 == 0) descr = descr + "\u00A0\u00A0\u00A0⭐" + (year - YYYY) + "⭐"
+        else if((year - YYYY) % 5 == 0) descr = descr + "\u00A0\u00A0\u00A0★" + (year - YYYY) + "★"
 
         list.at(index).count = list.at(index).count + 1;
         if(list.at(index).count > 1) list.at(index).tooltip = list.at(index).tooltip + '\n'; 
         list.at(index).tooltip = list.at(index).tooltip + descr;
+        if((year - YYYY) % 5 == 0) list.at(index).anniversary = true;
     }
     return list
 }
@@ -56,10 +57,11 @@ function Calendar(props) {
   return (
       <Card  sx={{ width: 800}}>
         <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography variant={'h6'} color="text.secondary" gutterBottom>
            Карта дней рождений в {props.year} году
         </Typography>
           <CalendarHeatmap
+            monthLabels={['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек']}
             startDate={new Date(props.year-1, 11, 31)}
             endDate={new Date(props.year, 11, 31)}
             values={itemValues}
@@ -74,7 +76,9 @@ function Calendar(props) {
                 if (!value) {
                   return 'color-empty';
                 }
-                return `color-scale-${value.count}`;
+                if(value.anniversary) return `color-anniversary`;
+                if(value.count == 1) return `color-scale-one`;
+                return `color-scale-many`;
               }}
           />
         </CardContent>
@@ -84,9 +88,9 @@ function Calendar(props) {
           onClose={handleClose}
           placement="top"
         >
-          <Paper>
-              <Typography style={{whiteSpace: 'pre-line'}} sx={{ p: 2 }}>{tooltipText}</Typography>
-            </Paper>
+          <Box sx={{marginBottom: "10px", padding: "-5px", bgcolor: "#616161ee", color: "#ffffff", borderRadius: "4px"}}>
+              <Typography variant={'body2'} style={{whiteSpace: 'pre-line'}} sx={{ p: 1  }}>{tooltipText}</Typography>
+          </Box>
         </Popper>
       </Card>
   )
