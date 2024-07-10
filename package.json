@@ -16,7 +16,8 @@
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "react-calendar-heatmap": "latest",
-    "@mui/icons-material": "latest"
+    "@mui/icons-material": "latest",
+    "@vitejs/plugin-legacy": "latest"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
