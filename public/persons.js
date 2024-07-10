@@ -1,7 +1,7 @@
 var persons = [
     {
         "name": "Person 1",
-        "bd": "10.12.1993"
+        "bd": "20.12.1993"
     },
     {
         "name": "Person 3",
